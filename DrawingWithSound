@@ -1,0 +1,86 @@
+import processing.sound.*;
+
+AudioIn input;
+Amplitude loudness;
+
+
+float x = 50;
+float y = 50;
+float z = 255;
+
+void setup() {
+  size(600, 900);
+   
+
+  background(255);
+
+  input = new AudioIn(this, 0);
+  input.start();
+  loudness = new Amplitude(this);
+
+  loudness.input(input);
+  frameRate(10);
+  noStroke();
+
+}
+
+
+void draw() {
+  
+  float volume = loudness.analyze();
+  println(volume);
+
+  int size = int(map(volume, 0, 0.5, 0, 400));
+
+
+  fill(0);
+
+  pushMatrix();
+
+
+  //ellipse(width/2+(x+size), y+size*4, size/3, size/3);
+
+  rect(x-size/2, y+size/2, size/3, size/12);
+  x+= 10;
+  if (x> width) {
+    x= 0;
+    y+= 20;
+
+    if (y> height) {
+      y=0;
+      z=z*-1;
+    }
+  }
+  //translate(width/2, height/2);
+  //rotate(PI/30*size);
+
+  ellipse(x-size*2, y-size*2, size/2, size/2);
+
+
+  popMatrix();
+
+
+  pushMatrix();
+
+
+  fill(0);
+  rect(height/2-(x-size), width-(y-size), size/4, size/2);
+  x+= 5;
+  if (x> width) {
+    x= 0;
+    y+= 20;
+
+    if (y> height) {
+      y=0;
+      z=z*-1;
+    }
+  }
+  popMatrix();
+  //saveFrame(„nuejazzhr2/frame3_#####.tiff“);
+
+  }
+  void mousePressed() {
+saveFrame(„dipl/frame3_#####.tiff“);
+  }
+
+  
